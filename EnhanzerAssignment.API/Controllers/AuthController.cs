@@ -8,12 +8,15 @@ namespace EnhanzerAssignment.API.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
+        private readonly JwtService _jwtService;
         private readonly IExternalAuthService _externalAuthService;
 
+
         public AuthController(
-            IExternalAuthService externalAuthService)
+            IExternalAuthService externalAuthService, JwtService jwtService)
         {
             _externalAuthService = externalAuthService;
+            _jwtService = jwtService;
         }
 
         [HttpPost("login")]
@@ -47,9 +50,15 @@ namespace EnhanzerAssignment.API.Controllers
                 });
             }
 
+            // Generate JWT after successful authentication
+            var token = _jwtService.GenerateToken(
+            request.Email,
+            result.UserCode);
+
             return Ok(new
             {
                 message = result.Message,
+                token = token,
                 locations = result.Locations
             });
         }

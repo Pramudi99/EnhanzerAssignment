@@ -23,7 +23,7 @@ namespace EnhanzerAssignment.API.Services
             _context = context;
         }
 
-        public async Task<(bool Success, string Message, List<LocationDto> Locations)>
+        public async Task<(bool Success, string Message, string UserCode, List<LocationDto> Locations)>
             LoginAsync(LoginRequest request)
         {
             var externalRequest = new ExternalLoginRequest
@@ -53,6 +53,7 @@ namespace EnhanzerAssignment.API.Services
                     return (
                         false,
                         "Invalid email or password.",
+                        string.Empty,
                         new List<LocationDto>()
                     );
                 }
@@ -80,6 +81,7 @@ namespace EnhanzerAssignment.API.Services
                     return (
                         false,
                         "Invalid response from authentication server.",
+                        string.Empty,
                         new List<LocationDto>()
                     );
                 }
@@ -91,6 +93,7 @@ namespace EnhanzerAssignment.API.Services
                     return (
                         false,
                         "No user information returned from authentication server.",
+                        string.Empty,
                         new List<LocationDto>()
                     );
                 }
@@ -140,6 +143,7 @@ namespace EnhanzerAssignment.API.Services
                 return (
                     true,
                     "Login successful.",
+                    userData.User_Code,
                     locations
                 );
             }
@@ -148,6 +152,7 @@ namespace EnhanzerAssignment.API.Services
                 return (
                     false,
                     "Unable to connect to the authentication server.",
+                    string.Empty,
                     new List<LocationDto>()
                 );
             }
@@ -156,6 +161,7 @@ namespace EnhanzerAssignment.API.Services
                 return (
                     false,
                     "Invalid response received from authentication server.",
+                    string.Empty,
                     new List<LocationDto>()
                 );
             }
@@ -164,6 +170,7 @@ namespace EnhanzerAssignment.API.Services
                 return (
                     false,
                     "An unexpected error occurred.",
+                    string.Empty,
                     new List<LocationDto>()
                 );
             }

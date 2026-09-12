@@ -4,7 +4,7 @@ namespace EnhanzerAssignment.API.Services
 {
     public interface IExternalAuthService
     {
-         Task<(bool Success, string Message, List<LocationDto> Locations)>
+         Task<(bool Success, string Message, string UserCode, List<LocationDto> Locations)>
           LoginAsync(LoginRequest request);
        
     }
