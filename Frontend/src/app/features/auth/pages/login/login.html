@@ -6,9 +6,14 @@
 
     <form
       [formGroup]="loginForm"
-      (ngSubmit)="onSubmit()">
+      (ngSubmit)="onSubmit()"
+      novalidate
+    >
 
-      <!-- Email -->
+      <!-- ============================= -->
+      <!-- EMAIL -->
+      <!-- ============================= -->
+
       <div class="form-group">
 
         <label for="email">
@@ -20,91 +25,159 @@
           type="email"
           formControlName="email"
           placeholder="Enter your email"
+          autocomplete="email"
         />
+
 
         @if (
           loginForm.get('email')?.touched &&
           loginForm.get('email')?.hasError('required')
         ) {
-          <small>
+
+          <small class="validation-error">
             Email is required.
           </small>
+
         }
+
 
         @if (
           loginForm.get('email')?.touched &&
           loginForm.get('email')?.hasError('email')
         ) {
-          <small>
+
+          <small class="validation-error">
             Please enter a valid email.
           </small>
+
         }
 
       </div>
 
 
-      <!-- Password -->
+      <!-- ============================= -->
+      <!-- PASSWORD -->
+      <!-- ============================= -->
+
       <div class="form-group">
 
         <label for="password">
           Password
         </label>
 
+
         <div class="password-input-container">
 
           <input
             id="password"
-            [type]="showPassword ? 'text' : 'password'"
+            [type]="
+              showPassword
+                ? 'text'
+                : 'password'
+            "
             formControlName="password"
             placeholder="Enter your password"
+            autocomplete="current-password"
           />
+
 
           <button
             type="button"
             class="password-toggle"
             (click)="togglePassword()"
-            [attr.aria-label]="
-              showPassword
-                ? 'Hide password'
-                : 'Show password'
-            "
           >
-            {{ showPassword ? '🙈' : '👁' }}
+
+            @if (showPassword) {
+              🙈
+            } @else {
+              👁
+            }
+
           </button>
 
         </div>
+
 
         @if (
           loginForm.get('password')?.touched &&
           loginForm.get('password')?.hasError('required')
         ) {
-          <small>
+
+          <small class="validation-error">
             Password is required.
           </small>
+
         }
 
       </div>
 
 
-      <!-- Error -->
-      @if (errorMessage) {
+      <!-- ============================= -->
+      <!-- ERROR MESSAGE -->
+      <!-- ============================= -->
 
-        <div class="error-message">
-          {{ errorMessage }}
+      @if (errorMessage !== '') {
+
+        <div
+          class="error-message"
+          role="alert"
+        >
+
+          <span class="message-icon">
+            !
+          </span>
+
+          <span>
+            {{ errorMessage }}
+          </span>
+
         </div>
 
       }
 
 
-      <!-- Submit -->
+      <!-- ============================= -->
+      <!-- SUCCESS MESSAGE -->
+      <!-- ============================= -->
+
+      @if (successMessage !== '') {
+
+        <div
+          class="success-message"
+          role="status"
+        >
+
+          <span class="message-icon">
+            ✓
+          </span>
+
+          <span>
+            {{ successMessage }}
+          </span>
+
+        </div>
+
+      }
+
+
+      <!-- ============================= -->
+      <!-- LOGIN BUTTON -->
+      <!-- ============================= -->
+
       <button
         type="submit"
-        [disabled]="isLoading">
+        class="login-button"
+        [disabled]="isLoading"
+      >
 
         @if (isLoading) {
+
           Logging in...
+
         } @else {
+
           Login
+
         }
 
       </button>

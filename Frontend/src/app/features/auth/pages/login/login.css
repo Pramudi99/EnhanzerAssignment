@@ -1,74 +1,168 @@
+/* ================================= */
+/* Login Container */
+/* ================================= */
+
 .login-container {
+
   min-height: 100vh;
+
   display: flex;
+
   justify-content: center;
   align-items: center;
+
   padding: 20px;
+
+  box-sizing: border-box;
 }
+
+
+/* ================================= */
+/* Login Card */
+/* ================================= */
 
 .login-card {
+
   width: 100%;
+
   max-width: 400px;
+
   padding: 30px;
+
   border: 1px solid #ddd;
+
   border-radius: 8px;
+
+  background-color: #ffffff;
+
+  box-sizing: border-box;
 }
 
+
+/* ================================= */
+/* Heading */
+/* ================================= */
+
 .login-card h2 {
+
   text-align: center;
+
+  margin-top: 0;
+
   margin-bottom: 25px;
 }
 
+
+/* ================================= */
+/* Form Group */
+/* ================================= */
+
 .form-group {
+
   margin-bottom: 20px;
 }
 
+
+/* ================================= */
+/* Label */
+/* ================================= */
+
 .form-group label {
+
   display: block;
+
   margin-bottom: 6px;
+
+  font-weight: 600;
 }
+
+
+/* ================================= */
+/* Input */
+/* ================================= */
 
 .form-group input {
+
   width: 100%;
+
   padding: 10px;
+
   box-sizing: border-box;
+
+  border: 1px solid #ccc;
+
+  border-radius: 5px;
+
+  font-size: 14px;
 }
 
-small {
+
+/* ================================= */
+/* Input Focus */
+/* ================================= */
+
+.form-group input:focus {
+
+  outline: none;
+
+  border-color: #555;
+}
+
+
+/* ================================= */
+/* Validation Error */
+/* ================================= */
+
+.validation-error {
+
   display: block;
+
   margin-top: 5px;
+
+  color: #dc3545;
+
+  font-size: 13px;
 }
 
-.error-message {
-  margin-bottom: 15px;
-  padding: 10px;
-}
 
-button {
-  width: 100%;
-  padding: 12px;
-  cursor: pointer;
-}
-
-button:disabled {
-  cursor: not-allowed;
-}
+/* ================================= */
+/* Password Container */
+/* ================================= */
 
 .password-input-container {
+
   position: relative;
+
   width: 100%;
 }
 
+
+/* ================================= */
+/* Password Input */
+/* ================================= */
+
 .password-input-container input {
+
   width: 100%;
+
   padding: 10px 45px 10px 10px;
+
   box-sizing: border-box;
 }
 
+
+/* ================================= */
+/* Password Toggle */
+/* ================================= */
+
 .password-toggle {
+
   position: absolute;
+
   right: 10px;
+
   top: 50%;
+
   transform: translateY(-50%);
 
   width: auto;
@@ -76,6 +170,7 @@ button:disabled {
   padding: 4px;
 
   border: none;
+
   background: transparent;
 
   cursor: pointer;
@@ -83,7 +178,165 @@ button:disabled {
   font-size: 18px;
 }
 
+
 .password-toggle:hover {
+
   background: transparent;
+
   opacity: 0.7;
+}
+
+
+/* ================================= */
+/* API Error Message */
+/* ================================= */
+
+.error-message {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 15px;
+
+  padding: 12px;
+
+  border-radius: 6px;
+
+  background-color: #fdeaea;
+
+  color: #b42318;
+
+  border: 1px solid #f5c2c0;
+
+  font-size: 14px;
+}
+
+
+/* ================================= */
+/* Success Message */
+/* ================================= */
+
+.success-message {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 15px;
+
+  padding: 12px;
+
+  border-radius: 6px;
+
+  background-color: #e8f7ee;
+
+  color: #176b3a;
+
+  border: 1px solid #b7e4c7;
+
+  font-size: 14px;
+}
+
+
+/* ================================= */
+/* Message Icon */
+/* ================================= */
+
+.message-icon {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 22px;
+
+  height: 22px;
+
+  border-radius: 50%;
+
+  color: white;
+
+  font-weight: bold;
+
+  flex-shrink: 0;
+}
+
+
+/* ================================= */
+/* Error Icon */
+/* ================================= */
+
+.error-message .message-icon {
+
+  background-color: #dc3545;
+}
+
+
+/* ================================= */
+/* Success Icon */
+/* ================================= */
+
+.success-message .message-icon {
+
+  background-color: #28a745;
+}
+
+
+/* ================================= */
+/* Login Button */
+/* ================================= */
+
+.login-button {
+
+  width: 100%;
+
+  padding: 12px;
+
+  border: none;
+
+  border-radius: 5px;
+
+  cursor: pointer;
+
+  font-size: 15px;
+
+  font-weight: 600;
+}
+
+
+/* ================================= */
+/* Disabled Button */
+/* ================================= */
+
+.login-button:disabled {
+
+  cursor: not-allowed;
+
+  opacity: 0.6;
+}
+
+
+/* ================================= */
+/* Mobile */
+/* ================================= */
+
+@media (max-width: 500px) {
+
+  .login-container {
+
+    padding: 15px;
+  }
+
+  .login-card {
+
+    padding: 25px 20px;
+  }
+
 }

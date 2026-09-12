@@ -1,404 +1,386 @@
-<div class="purchase-bill-container">
+<div class="purchase-bill-page">
 
-  <h2>Purchase Bill</h2>
+  <!-- Purchase Bill Header -->
+  <div class="page-header">
+    <div>
+      <h2>Purchase Bill</h2>
+      <p>Enter information for the Purchase Bill</p>
+    </div>
+  </div>
 
-  <!-- ========================= -->
-  <!-- Purchase Bill Form -->
-  <!-- ========================= -->
+  <!-- Main Content -->
+  <div class="purchase-bill-layout">
 
-  <form
-    [formGroup]="purchaseBillForm"
-    (ngSubmit)="addItem()"
-    class="purchase-form"
-  >
+    <!-- Left Side -->
+    <div class="main-section">
 
-    <!-- ITEM AUTOCOMPLETE -->
+      <!-- Items Section -->
+      <div class="items-card">
 
-    <div class="form-group item-autocomplete">
+        <div class="section-tabs">
+          <button class="tab active" type="button">
+            Items
+          </button>
+        </div>
 
-      <label for="item">
-        Item
-      </label>
-
-      <input
-        id="item"
-        type="text"
-        formControlName="item"
-        placeholder="Search item"
-        autocomplete="off"
-        (input)="onItemInput()"
-        (focus)="onItemInput()"
-        (blur)="hideItemSuggestions()"
-      />
-
-      <!-- Suggestions -->
-
-      <div
-        class="suggestions"
-        *ngIf="
-          showItemSuggestions &&
-          filteredItems.length > 0
-        "
-      >
-
-        <div
-          class="suggestion"
-          *ngFor="let item of filteredItems"
-          (mousedown)="selectItem(item)"
+        <!-- Purchase Bill Form -->
+        <form
+          [formGroup]="purchaseBillForm"
+          (ngSubmit)="addItem()"
+          class="purchase-form"
         >
-          {{ item }}
+
+          <!-- Item -->
+          <div class="form-group item-autocomplete">
+
+            <label for="item">Item</label>
+
+            <input
+              id="item"
+              type="text"
+              formControlName="item"
+              placeholder="Search item"
+              autocomplete="off"
+              (input)="onItemInput()"
+              (focus)="onItemInput()"
+              (blur)="hideItemSuggestions()"
+            />
+
+            @if (showItemSuggestions && filteredItems.length > 0) {
+              <div class="suggestions">
+
+                @for (item of filteredItems; track item) {
+                  <div
+                    class="suggestion"
+                    (mousedown)="selectItem(item)"
+                  >
+                    {{ item }}
+                  </div>
+                }
+
+              </div>
+            }
+
+            @if (
+              purchaseBillForm.get('item')?.touched &&
+              purchaseBillForm.get('item')?.invalid
+            ) {
+              <small class="error">
+                Please select an item.
+              </small>
+            }
+
+          </div>
+
+
+          <!-- Batch -->
+          <div class="form-group">
+
+            <label for="batch">Batch</label>
+
+            <select
+              id="batch"
+              formControlName="batch"
+            >
+              <option value="">Select Batch</option>
+
+              @for (location of locations; track location.id) {
+                <option [value]="location.location_Name">
+                  {{ location.location_Name }}
+                </option>
+              }
+
+            </select>
+
+            @if (
+              purchaseBillForm.get('batch')?.touched &&
+              purchaseBillForm.get('batch')?.invalid
+            ) {
+              <small class="error">
+                Please select a batch.
+              </small>
+            }
+
+          </div>
+
+
+          <!-- Standard Cost -->
+          <div class="form-group">
+
+            <label for="standardCost">
+              Standard Cost
+            </label>
+
+            <input
+              id="standardCost"
+              type="number"
+              formControlName="standardCost"
+              min="0"
+              step="0.01"
+              placeholder="0.00"
+            />
+
+            @if (
+              purchaseBillForm.get('standardCost')?.touched &&
+              purchaseBillForm.get('standardCost')?.invalid
+            ) {
+              <small class="error">
+                Please enter a valid cost.
+              </small>
+            }
+
+          </div>
+
+
+          <!-- Standard Price -->
+          <div class="form-group">
+
+            <label for="standardPrice">
+              Standard Price
+            </label>
+
+            <input
+              id="standardPrice"
+              type="number"
+              formControlName="standardPrice"
+              min="0"
+              step="0.01"
+              placeholder="0.00"
+            />
+
+            @if (
+              purchaseBillForm.get('standardPrice')?.touched &&
+              purchaseBillForm.get('standardPrice')?.invalid
+            ) {
+              <small class="error">
+                Please enter a valid price.
+              </small>
+            }
+
+          </div>
+
+
+          <!-- Quantity -->
+          <div class="form-group">
+
+            <label for="quantity">
+              Quantity
+            </label>
+
+            <input
+              id="quantity"
+              type="number"
+              formControlName="quantity"
+              min="1"
+              step="1"
+              placeholder="0"
+            />
+
+            @if (
+              purchaseBillForm.get('quantity')?.touched &&
+              purchaseBillForm.get('quantity')?.invalid
+            ) {
+              <small class="error">
+                Quantity must be at least 1.
+              </small>
+            }
+
+          </div>
+
+
+          <!-- Discount -->
+          <div class="form-group">
+
+            <label for="discount">
+              Discount (%)
+            </label>
+
+            <input
+              id="discount"
+              type="number"
+              formControlName="discount"
+              min="0"
+              max="100"
+              step="0.01"
+              placeholder="0.00"
+            />
+
+            @if (
+              purchaseBillForm.get('discount')?.touched &&
+              purchaseBillForm.get('discount')?.invalid
+            ) {
+              <small class="error">
+                Discount must be between 0% and 100%.
+              </small>
+            }
+
+          </div>
+
+
+          <!-- Add Button -->
+          <div class="form-button">
+
+            <button
+              type="submit"
+              class="add-button"
+            >
+              <span>+</span>
+              Add
+            </button>
+
+          </div>
+
+        </form>
+
+
+        <!-- Items Table -->
+        <div class="table-section">
+
+          <div class="table-wrapper">
+
+            <table>
+
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Batch</th>
+                  <th>Standard Cost</th>
+                  <th>Standard Price</th>
+                  <th>Quantity</th>
+                  <th>Discount</th>
+                  <th>Total Cost</th>
+                  <th>Total Selling</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                @for (
+                  item of purchaseBillItems;
+                  track $index
+                ) {
+
+                  <tr>
+
+                    <td>{{ item.item }}</td>
+
+                    <td>{{ item.batch }}</td>
+
+                    <td>
+                      {{ item.standardCost | number:'1.2-2' }}
+                    </td>
+
+                    <td>
+                      {{ item.standardPrice | number:'1.2-2' }}
+                    </td>
+
+                    <td>
+                      {{ item.quantity }}
+                    </td>
+
+                    <td>
+                      {{ item.discount }}%
+                    </td>
+
+                    <td>
+                      {{ item.totalCost | number:'1.2-2' }}
+                    </td>
+
+                    <td>
+                      {{ item.totalSelling | number:'1.2-2' }}
+                    </td>
+
+                  </tr>
+
+                }
+
+                @if (purchaseBillItems.length === 0) {
+
+                  <tr>
+                    <td
+                      colspan="8"
+                      class="empty-message"
+                    >
+                      No items added yet.
+                    </td>
+                  </tr>
+
+                }
+
+              </tbody>
+
+            </table>
+
+          </div>
+
         </div>
 
       </div>
 
-      <!-- Validation -->
-
-      <small
-        class="error"
-        *ngIf="
-          purchaseBillForm.get('item')?.touched &&
-          purchaseBillForm.get('item')?.invalid
-        "
-      >
-        Please select an item.
-      </small>
-
     </div>
 
 
-    <!-- BATCH -->
-
-    <div class="form-group">
+    <!-- Right Side Summary -->
+    <aside class="summary-card">
 
-      <label for="batch">
-        Batch
-      </label>
+      <div class="summary-header">
+        <span class="summary-icon">▣</span>
+        <span>Summary</span>
+      </div>
 
-      <select
-        id="batch"
-        formControlName="batch"
-      >
-
-        <option value="">
-          Select Batch
-        </option>
-
-        <option
-          *ngFor="let location of locations"
-          [value]="location.location_Name"
-        >
-          {{ location.location_Name }}
-        </option>
-
-      </select>
-
-      <small
-        class="error"
-        *ngIf="
-          purchaseBillForm.get('batch')?.touched &&
-          purchaseBillForm.get('batch')?.invalid
-        "
-      >
-        Please select a batch.
-      </small>
-
-    </div>
-
-
-    <!-- STANDARD COST -->
-
-    <div class="form-group">
-
-      <label for="standardCost">
-        Standard Cost
-      </label>
-
-      <input
-        id="standardCost"
-        type="number"
-        formControlName="standardCost"
-        min="0"
-        step="0.01"
-        placeholder="Enter cost"
-      />
-
-      <small
-        class="error"
-        *ngIf="
-          purchaseBillForm.get('standardCost')?.touched &&
-          purchaseBillForm.get('standardCost')?.invalid
-        "
-      >
-        Please enter a valid standard cost.
-      </small>
-
-    </div>
-
-
-    <!-- STANDARD PRICE -->
-
-    <div class="form-group">
-
-      <label for="standardPrice">
-        Standard Price
-      </label>
 
-      <input
-        id="standardPrice"
-        type="number"
-        formControlName="standardPrice"
-        min="0"
-        step="0.01"
-        placeholder="Enter price"
-      />
+      <!-- Item Summary -->
+      <div class="summary-section">
 
-      <small
-        class="error"
-        *ngIf="
-          purchaseBillForm.get('standardPrice')?.touched &&
-          purchaseBillForm.get('standardPrice')?.invalid
-        "
-      >
-        Please enter a valid standard price.
-      </small>
+        <h4>Item Summary</h4>
 
-    </div>
+        <div class="summary-row">
+          <span>Total Items</span>
+          <strong>{{ totalItems }}</strong>
+        </div>
 
+        <div class="summary-row">
+          <span>Total Quantity</span>
+          <strong>{{ totalQuantity }}</strong>
+        </div>
 
-    <!-- QUANTITY -->
+      </div>
 
-    <div class="form-group">
 
-      <label for="quantity">
-        Quantity
-      </label>
+      <!-- Financial Summary -->
+      <div class="summary-section">
 
-      <input
-        id="quantity"
-        type="number"
-        formControlName="quantity"
-        min="1"
-        step="1"
-        placeholder="Enter quantity"
-      />
+        <h4>Financial Summary</h4>
 
-      <small
-        class="error"
-        *ngIf="
-          purchaseBillForm.get('quantity')?.touched &&
-          purchaseBillForm.get('quantity')?.invalid
-        "
-      >
-        Quantity must be at least 1.
-      </small>
+        <div class="summary-row">
+          <span>Total Cost</span>
+          <strong>
+            {{ totalCost | number:'1.2-2' }}
+          </strong>
+        </div>
 
-    </div>
+        <div class="summary-row">
+          <span>Total Selling</span>
+          <strong>
+            {{ totalSelling | number:'1.2-2' }}
+          </strong>
+        </div>
 
+      </div>
 
-    <!-- DISCOUNT -->
 
-    <div class="form-group">
+      <!-- Net Total -->
+      <div class="net-total">
 
-      <label for="discount">
-        Discount (%)
-      </label>
+        <span>Net Total</span>
 
-      <input
-        id="discount"
-        type="number"
-        formControlName="discount"
-        min="0"
-        max="100"
-        step="0.01"
-        placeholder="Enter discount"
-      />
+        <strong>
+          {{ totalSelling | number:'1.2-2' }}
+        </strong>
 
-      <small
-        class="error"
-        *ngIf="
-          purchaseBillForm.get('discount')?.touched &&
-          purchaseBillForm.get('discount')?.invalid
-        "
-      >
-        Discount must be between 0% and 100%.
-      </small>
+      </div>
 
-    </div>
-
-
-    <!-- ADD BUTTON -->
-
-    <div class="form-button">
-
-      <button
-        type="submit"
-      >
-        Add
-      </button>
-
-    </div>
-
-  </form>
-
-
-  <!-- ========================= -->
-  <!-- Purchase Bill Table -->
-  <!-- ========================= -->
-
-  <div class="table-container">
-
-    <table>
-
-      <thead>
-
-        <tr>
-
-          <th>Item</th>
-
-          <th>Batch</th>
-
-          <th>Standard Cost</th>
-
-          <th>Standard Price</th>
-
-          <th>Quantity</th>
-
-          <th>Discount</th>
-
-          <th>Total Cost</th>
-
-          <th>Total Selling</th>
-
-        </tr>
-
-      </thead>
-
-
-      <tbody>
-
-        <!-- Added items -->
-
-        <tr
-          *ngFor="
-            let item of purchaseBillItems
-          "
-        >
-
-          <td>
-            {{ item.item }}
-          </td>
-
-          <td>
-            {{ item.batch }}
-          </td>
-
-          <td>
-            {{ item.standardCost | number:'1.2-2' }}
-          </td>
-
-          <td>
-            {{ item.standardPrice | number:'1.2-2' }}
-          </td>
-
-          <td>
-            {{ item.quantity }}
-          </td>
-
-          <td>
-            {{ item.discount }}%
-          </td>
-
-          <td>
-            {{ item.totalCost | number:'1.2-2' }}
-          </td>
-
-          <td>
-            {{ item.totalSelling | number:'1.2-2' }}
-          </td>
-
-        </tr>
-
-
-        <!-- No items -->
-
-        <tr
-          *ngIf="
-            purchaseBillItems.length === 0
-          "
-        >
-
-          <td
-            colspan="8"
-            class="empty-message"
-          >
-            No items added yet.
-          </td>
-
-        </tr>
-
-      </tbody>
-
-    </table>
-
-  </div>
-
-
-  <!-- ========================= -->
-  <!-- Item Summary -->
-  <!-- ========================= -->
-
-  <div class="summary">
-
-    <div class="summary-item">
-
-      <span>
-        Total Items
-      </span>
-
-      <strong>
-        {{ totalItems }}
-      </strong>
-
-    </div>
-
-
-    <div class="summary-item">
-
-      <span>
-        Total Quantity
-      </span>
-
-      <strong>
-        {{ totalQuantity }}
-      </strong>
-
-    </div>
-
-
-    <div class="summary-item">
-
-      <span>
-        Total Cost
-      </span>
-
-      <strong>
-        {{ totalCost | number:'1.2-2' }}
-      </strong>
-
-    </div>
-
-
-    <div class="summary-item">
-
-      <span>
-        Total Selling
-      </span>
-
-      <strong>
-        {{ totalSelling | number:'1.2-2' }}
-      </strong>
-
-    </div>
+    </aside>
 
   </div>
 
