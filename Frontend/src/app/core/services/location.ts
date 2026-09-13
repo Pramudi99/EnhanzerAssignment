@@ -2,12 +2,13 @@ import { Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LocationsModel } from '../models/location';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Location {
-     private apiUrl = 'https://enhanzer-assignment-api-d5dfasgpcncve4c4.southeastasia-01.azurewebsites.net/api/Location';
+     private apiUrl = `${environment.apiUrl}/Location`;
 
   constructor(private http: HttpClient) {}
 

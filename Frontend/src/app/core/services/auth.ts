@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface LoginRequest {
   email: string;
@@ -22,8 +23,7 @@ export interface LoginResponse {
   providedIn: 'root'
 })
 export class Auth {
-    private apiUrl = 'https://enhanzer-assignment-api-d5dfasgpcncve4c4.southeastasia-01.azurewebsites.net/api/Auth';
-
+    private apiUrl = `${environment.apiUrl}/Auth`;
   constructor(private http: HttpClient) {}
 
   login(data: LoginRequest): Observable<LoginResponse> {
