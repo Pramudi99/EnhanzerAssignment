@@ -53,6 +53,10 @@ namespace EnhanzerAssignment.API.Services
                     System.Text.Encoding.UTF8,
                     "application/json");
 
+                _logger.LogWarning(
+                    "CALLING EXTERNAL API: {Url}",
+                    LoginUrl);
+
                 var response = await _httpClient.PostAsync(
                     LoginUrl,
                     content);
@@ -73,14 +77,13 @@ namespace EnhanzerAssignment.API.Services
                     await response.Content.ReadAsStringAsync();
 
                 // Temporary debugging
-                _logger.LogInformation(
-                "External API HTTP Status: {StatusCode}",
+                _logger.LogWarning(
+                "EXTERNAL API HTTP STATUS: {StatusCode}",
                 response.StatusCode);
 
-                _logger.LogInformation(
-                    "External API Response: {Response}",
+                _logger.LogWarning(
+                    "EXTERNAL API RESPONSE: {Response}",
                     responseContent);
-
                 // 4. Deserialize JSON
                 var loginResponse =
                     JsonSerializer.Deserialize<ExternalLoginResponse>(
@@ -157,8 +160,12 @@ namespace EnhanzerAssignment.API.Services
                     locations
                 );
             }
-            catch (HttpRequestException)
+            catch (HttpRequestException ex)
             {
+                _logger.LogError(
+                    ex,
+                    "HTTP error while calling external authentication API.");
+
                 return (
                     false,
                     "Unable to connect to the authentication server.",
@@ -166,8 +173,12 @@ namespace EnhanzerAssignment.API.Services
                     new List<LocationDto>()
                 );
             }
-            catch (JsonException)
+            catch (JsonException ex)
             {
+                _logger.LogError(
+                    ex,
+                    "JSON deserialization error from external authentication API.");
+
                 return (
                     false,
                     "Invalid response received from authentication server.",
