@@ -7,7 +7,7 @@ import { LocationsModel } from '../models/location';
   providedIn: 'root'
 })
 export class Location {
-     private apiUrl = 'http://localhost:5135/api/Location';
+     private apiUrl = 'https://enhanzer-assignment-api-d5dfasgpcncve4c4.southeastasia-01.azurewebsites.net/api/Location';
 
   constructor(private http: HttpClient) {}
 

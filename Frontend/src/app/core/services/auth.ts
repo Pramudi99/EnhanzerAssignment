@@ -22,7 +22,7 @@ export interface LoginResponse {
   providedIn: 'root'
 })
 export class Auth {
-    private apiUrl = 'http://localhost:5135/api/Auth';
+    private apiUrl = 'https://enhanzer-assignment-api-d5dfasgpcncve4c4.southeastasia-01.azurewebsites.net/api/Auth';
 
   constructor(private http: HttpClient) {}
 
