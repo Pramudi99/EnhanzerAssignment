@@ -46,9 +46,16 @@ namespace EnhanzerAssignment.API.Services
             try
             {
                 // 1. Call external API
-                var response = await _httpClient.PostAsJsonAsync(
+                var json = JsonSerializer.Serialize(externalRequest);
+
+                var content = new StringContent(
+                    json,
+                    System.Text.Encoding.UTF8,
+                    "application/json");
+
+                var response = await _httpClient.PostAsync(
                     LoginUrl,
-                    externalRequest);
+                    content);
 
                 // 2. Check HTTP status
                 if (!response.IsSuccessStatusCode)
@@ -66,13 +73,13 @@ namespace EnhanzerAssignment.API.Services
                     await response.Content.ReadAsStringAsync();
 
                 // Temporary debugging
-                Console.WriteLine(
-                    "========== EXTERNAL API RESPONSE ==========");
+                _logger.LogInformation(
+                "External API HTTP Status: {StatusCode}",
+                response.StatusCode);
 
-                Console.WriteLine(responseContent);
-
-                Console.WriteLine(
-                    "===========================================");
+                _logger.LogInformation(
+                    "External API Response: {Response}",
+                    responseContent);
 
                 // 4. Deserialize JSON
                 var loginResponse =
