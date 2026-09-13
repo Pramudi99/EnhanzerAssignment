@@ -21,6 +21,16 @@ namespace EnhanzerAssignment.API.Controllers
             _logger = logger;
         }
 
+        [HttpGet("test-version")]
+        public IActionResult TestVersion()
+        {
+            return Ok(new
+            {
+                version = "logging-test-2026-09-13",
+                message = "Latest code is running."
+            });
+        }
+
         [HttpPost("login")]
         public async Task<IActionResult> Login(
             [FromBody] LoginRequest request)
