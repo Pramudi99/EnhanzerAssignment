@@ -10,32 +10,21 @@ namespace EnhanzerAssignment.API.Controllers
     {
         private readonly JwtService _jwtService;
         private readonly IExternalAuthService _externalAuthService;
-        private readonly ILogger<AuthController> _logger;
 
 
         public AuthController(
-            IExternalAuthService externalAuthService, JwtService jwtService, ILogger<AuthController> logger)
+            IExternalAuthService externalAuthService, JwtService jwtService)
         {
             _externalAuthService = externalAuthService;
             _jwtService = jwtService;
-            _logger = logger;
+         
         }
 
-        [HttpGet("test-version")]
-        public IActionResult TestVersion()
-        {
-            return Ok(new
-            {
-                version = "logging-test-2026-09-13",
-                message = "Latest code is running."
-            });
-        }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(
             [FromBody] LoginRequest request)
         {
-            _logger.LogWarning("========== LOGIN ENDPOINT CALLED ==========");
 
             if (string.IsNullOrWhiteSpace(request.Email))
             {
