@@ -11,16 +11,19 @@ namespace EnhanzerAssignment.API.Services
     {
         private readonly HttpClient _httpClient;
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<ExternalAuthService> _logger;
 
         private const string LoginUrl =
             "https://ez-staging-api.azurewebsites.net/api/External_Api/POS_Api/Invoke";
 
         public ExternalAuthService(
             HttpClient httpClient,
-            ApplicationDbContext context)
+            ApplicationDbContext context,
+            ILogger<ExternalAuthService> logger)
         {
             _httpClient = httpClient;
             _context = context;
+            _logger = logger;
         }
 
         public async Task<(bool Success, string Message, string UserCode, List<LocationDto> Locations)>
@@ -165,8 +168,12 @@ namespace EnhanzerAssignment.API.Services
                     new List<LocationDto>()
                 );
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(
+                    ex,
+                    "Unexpected error during login and location saving.");
+
                 return (
                     false,
                     "An unexpected error occurred.",
