@@ -2,6 +2,7 @@
 using EnhanzerAssignment.API.DTOs;
 using EnhanzerAssignment.API.Models;
 using EnhanzerAssignment.API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EnhanzerAssignment.API.Controllers
@@ -20,6 +21,7 @@ namespace EnhanzerAssignment.API.Controllers
 
         // POST: api/PurchaseOrder
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create(
             CreatePurchaseOrderDto dto)
         {
@@ -42,6 +44,7 @@ namespace EnhanzerAssignment.API.Controllers
 
         // GET: api/PurchaseOrder/latest
         [HttpGet("latest")]
+        [Authorize]
         public async Task<IActionResult> GetLatest()
         {
             var orders =
@@ -57,6 +60,7 @@ namespace EnhanzerAssignment.API.Controllers
 
         // GET: api/PurchaseOrder/oldest-items
         [HttpGet("oldest-items")]
+        [Authorize]
         public async Task<IActionResult> GetOldestItems()
         {
             var items =
@@ -71,6 +75,7 @@ namespace EnhanzerAssignment.API.Controllers
         }
 
         [HttpGet("item-quantities")]
+        [Authorize]
         public async Task<IActionResult> GetItemQuantities()
         {
             var result =
