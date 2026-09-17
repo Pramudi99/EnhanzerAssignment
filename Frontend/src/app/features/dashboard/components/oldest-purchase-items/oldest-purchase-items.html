@@ -1,0 +1,68 @@
+<div class="widget-container">
+
+  @if (isLoading) {
+
+    <div class="loading">
+      Loading items...
+    </div>
+
+  }
+  @else if (errorMessage) {
+
+    <div class="error">
+      {{ errorMessage }}
+    </div>
+
+  }
+  @else if (items.length === 0) {
+
+    <div class="empty">
+      No purchase items found.
+    </div>
+
+  }
+  @else {
+
+    <div class="item-list">
+
+      @for (item of items; track $index) {
+
+        <div class="item-row">
+
+          <div class="item-icon">
+            ▦
+          </div>
+
+          <div class="item-details">
+
+            <div class="item-name">
+              {{ item.itemName }}
+            </div>
+
+            <div class="purchase-id">
+              Purchase Order #{{ item.purchaseOrderId }}
+            </div>
+
+          </div>
+
+          <div class="quantity">
+
+            <span>
+              Qty
+            </span>
+
+            <strong>
+              {{ item.quantity }}
+            </strong>
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+  }
+
+</div>

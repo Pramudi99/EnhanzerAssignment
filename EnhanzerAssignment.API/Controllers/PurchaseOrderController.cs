@@ -69,5 +69,14 @@ namespace EnhanzerAssignment.API.Controllers
                 quantity = x.Quantity
             }));
         }
+
+        [HttpGet("item-quantities")]
+        public async Task<IActionResult> GetItemQuantities()
+        {
+            var result =
+                await _purchaseOrderService.GetItemQuantitiesAsync();
+
+            return Ok(result);
+        }
     }
 }

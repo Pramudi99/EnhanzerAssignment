@@ -73,6 +73,19 @@ namespace EnhanzerAssignment.API.Services
                 .ToListAsync();
         }
 
+        public async Task<List<ItemQuantityDto>>
+    GetItemQuantitiesAsync()
+        {
+            return await _context.PurchaseOrderItems
+                .GroupBy(x => x.ItemName)
+                .Select(g => new ItemQuantityDto
+                {
+                    ItemName = g.Key,
+                    Quantity = g.Sum(x => x.Quantity)
+                })
+                .ToListAsync();
+        }
+
 
     }
 }

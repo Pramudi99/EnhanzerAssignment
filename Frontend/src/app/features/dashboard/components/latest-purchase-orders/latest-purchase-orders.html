@@ -1,0 +1,74 @@
+<div class="widget-container">
+
+  @if (isLoading) {
+
+    <div class="loading">
+      Loading purchase orders...
+    </div>
+
+  }
+  @else if (errorMessage) {
+
+    <div class="error">
+      {{ errorMessage }}
+    </div>
+
+  }
+  @else if (orders.length === 0) {
+
+    <div class="empty">
+      No purchase orders found.
+    </div>
+
+  }
+  @else {
+
+    <div class="order-count">
+      {{ orders.length }} latest purchase orders
+    </div>
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>ID</th>
+            <th>Net Amount</th>
+            <th>No. of Items</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          @for (order of orders; track order.id) {
+
+            <tr>
+
+              <td>
+                PO-{{ order.id }}
+              </td>
+
+              <td>
+                {{ order.netAmount | number:'1.2-2' }}
+              </td>
+
+              <td>
+                {{ order.noOfItems }}
+              </td>
+
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  }
+
+</div>

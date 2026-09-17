@@ -1,0 +1,202 @@
+<div class="dashboard-container">
+
+  <aside class="sidebar">
+
+    <div class="logo">
+      <span class="logo-icon">e</span>
+      <span>zSuite</span>
+    </div>
+
+    <nav class="sidebar-menu">
+
+      <a
+        routerLink="/dashboard"
+        class="menu-item active"
+      >
+        <span class="menu-icon">⌂</span>
+        <span>Dashboard</span>
+      </a>
+
+      <a class="menu-item">
+        <span class="menu-icon">▣</span>
+        <span>Core</span>
+      </a>
+
+      <a class="menu-item">
+        <span class="menu-icon">▤</span>
+        <span>Finance</span>
+      </a>
+
+      <a class="menu-item">
+        <span class="menu-icon">▥</span>
+        <span>Assets</span>
+      </a>
+
+      <a class="menu-item">
+        <span class="menu-icon">▦</span>
+        <span>Procurement</span>
+      </a>
+
+      <a class="menu-item">
+        <span class="menu-icon">▧</span>
+        <span>Inventory</span>
+      </a>
+
+      <a class="menu-item">
+        <span class="menu-icon">▨</span>
+        <span>Manufacturing</span>
+      </a>
+
+      <a
+        routerLink="/purchase-bill"
+        class="menu-item"
+      >
+        <span class="menu-icon">▩</span>
+        <span>Purchase</span>
+      </a>
+
+      <a class="menu-item">
+        <span class="menu-icon">◫</span>
+        <span>Sales</span>
+      </a>
+
+      <a class="menu-item">
+        <span class="menu-icon">◈</span>
+        <span>Services</span>
+      </a>
+
+      <a class="menu-item">
+        <span class="menu-icon">◉</span>
+        <span>Docs</span>
+      </a>
+
+      <a class="menu-item">
+        <span class="menu-icon">◌</span>
+        <span>Analytics</span>
+      </a>
+
+    </nav>
+
+    <div class="sidebar-version">
+      v6.0.0
+    </div>
+
+  </aside>
+
+
+  <main class="main-content">
+
+    <header class="topbar">
+
+      <div class="topbar-left">
+        <button class="mobile-menu">
+          ☰
+        </button>
+
+        <span class="page-title">
+          Dashboard
+        </span>
+
+        <span class="dropdown-arrow">
+          ▼
+        </span>
+      </div>
+
+      <div class="topbar-right">
+
+        <div class="organization">
+          <span>▣</span>
+          <span>My Organization</span>
+          <span>▼</span>
+        </div>
+
+        <div class="top-icon">
+          ◉
+        </div>
+
+        <div class="top-icon">
+          ?
+        </div>
+
+        <div class="profile">
+          ●
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <section class="dashboard-content">
+
+      <div class="dashboard-grid">
+
+        <section class="dashboard-card delayed-card">
+
+          <div class="card-header">
+
+            <div class="card-title">
+              Latest Purchase Orders
+            </div>
+
+            <div class="card-filter">
+              Today
+              <span>⌄</span>
+            </div>
+
+          </div>
+
+          <app-latest-purchase-orders>
+          </app-latest-purchase-orders>
+
+        </section>
+
+
+        <section class="dashboard-card accounts-card">
+
+          <div class="card-header">
+
+            <div class="card-title">
+              Oldest Purchase Items
+            </div>
+
+            <div class="card-filter">
+              Today
+              <span>⌄</span>
+            </div>
+
+          </div>
+
+          <app-oldest-purchase-items>
+          </app-oldest-purchase-items>
+
+        </section>
+
+
+        <section class="dashboard-card expense-card">
+
+          <div class="card-header">
+
+            <div class="card-title">
+              Item Quantities
+            </div>
+
+            <div class="card-filter">
+              Today
+              <span>⌄</span>
+            </div>
+
+          </div>
+
+          <app-item-quantity-chart>
+          </app-item-quantity-chart>
+
+        </section>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>

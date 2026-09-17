@@ -17,24 +17,16 @@ namespace EnhanzerAssignment.API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<LocationDetail>()
                 .ToTable("Location_Details");
-
-            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<PurchaseOrder>()
                 .HasMany(po => po.Items)
                 .WithOne(item => item.PurchaseOrder)
                 .HasForeignKey(item => item.PurchaseOrderId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<PurchaseOrderItem>()
-                .HasOne(item => item.PurchaseOrder)
-                .WithMany(po => po.Items)
-                .HasForeignKey(item => item.PurchaseOrderId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-      
 
             modelBuilder.Entity<PurchaseOrder>()
                 .Property(x => x.NetAmount)
@@ -51,6 +43,10 @@ namespace EnhanzerAssignment.API.Data
             modelBuilder.Entity<PurchaseOrderItem>()
                 .Property(x => x.Discount)
                 .HasPrecision(5, 2);
+
+            modelBuilder.Entity<PurchaseOrderItem>()
+                .Property(x => x.TotalCost)
+                .HasPrecision(18, 2);
 
             modelBuilder.Entity<PurchaseOrderItem>()
                 .Property(x => x.TotalSelling)

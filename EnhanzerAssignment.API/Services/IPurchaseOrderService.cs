@@ -12,6 +12,6 @@ namespace EnhanzerAssignment.API.Services
 
         Task<List<PurchaseOrderItem>> GetOldestItemsAsync();
 
-        //Task<List<ItemQuantityDto>> GetItemQuantitiesAsync();
+        Task<List<ItemQuantityDto>> GetItemQuantitiesAsync();
     }
 }

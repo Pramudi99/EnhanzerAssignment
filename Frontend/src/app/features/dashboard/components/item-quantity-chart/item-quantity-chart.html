@@ -1,0 +1,96 @@
+<div class="widget-container">
+
+  @if (isLoading) {
+
+    <div class="loading">
+      Loading chart...
+    </div>
+
+  }
+  @else if (errorMessage) {
+
+    <div class="error">
+      {{ errorMessage }}
+    </div>
+
+  }
+  @else if (items.length === 0) {
+
+    <div class="empty">
+      No item data found.
+    </div>
+
+  }
+  @else {
+
+    <div class="chart-layout">
+
+      <div
+        class="donut"
+        [style.background]="chartBackground"
+      >
+
+        <div class="donut-center">
+
+          <strong>
+            {{ totalQuantity }}
+          </strong>
+
+          <span>
+            Total Qty
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="legend">
+
+        @for (
+          item of items;
+          track item.itemName;
+          let i = $index
+        ) {
+
+          <div class="legend-item">
+
+            <span
+              class="legend-dot"
+              [style.background]="
+                [
+                  '#079bd3',
+                  '#13b9c8',
+                  '#0c7198',
+                  '#18c978',
+                  '#5b7cfa',
+                  '#f3a712',
+                  '#8b5cf6'
+                ][i % 7]
+              "
+            ></span>
+
+            <div class="legend-content">
+
+              <span class="legend-name">
+                {{ item.itemName }}
+              </span>
+
+              <span class="legend-value">
+                {{ item.quantity }}
+                ({{ getPercentage(item.quantity) }}%)
+              </span>
+
+            </div>
+
+          </div>
+
+        }
+
+      </div>
+
+    </div>
+
+  }
+
+</div>
